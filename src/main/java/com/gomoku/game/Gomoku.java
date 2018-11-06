@@ -1,28 +1,18 @@
 package com.gomoku.game;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.annotation.Transient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.gomoku.controller.GameController;
 import com.gomoku.exception.CellNotEmptyException;
 import com.gomoku.exception.NotPlayersTurnException;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Gomoku {
-
-	private static final Logger logger = LoggerFactory.getLogger(Gomoku.class);
 
 	private static final int BOARD_SIDE_SIZE = 15;
 	private static final int BOARD_CELL_EMPTY = 0;
@@ -119,10 +109,12 @@ public class Gomoku {
 		column = move.getColumn();
 
 		try {
+			// Validate turn
 			if (move.getPlayer() != whoseTurn) {
 				throw new NotPlayersTurnException(move.getPlayer());
 			}
 			
+			// Validate cell
 			if (board[row][column] != BOARD_CELL_EMPTY) {				
 				throw new CellNotEmptyException();
 			}
@@ -130,6 +122,7 @@ public class Gomoku {
 			// All clear
 			board[row][column] = cellTypeByPlayer(whoseTurn);
 			
+			//Check winner
 			if (checkWinner(row, column)) {
 				setWinner(whoseTurn);
 				setStatus(Status.FINISHED);
@@ -137,6 +130,7 @@ public class Gomoku {
 				nextTurn();
 			}
 			
+			// Validate round
 			if (round == MAX_ROUNDS) {
 				setStatus(Status.FINISHED);
 				setWinner(Player.DRAW);

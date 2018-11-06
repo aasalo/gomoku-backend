@@ -2,7 +2,6 @@ package com.gomoku;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -10,12 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,27 +26,17 @@ import com.gomoku.service.GameService;
 @WebMvcTest(GameController.class)
 public class GameControllerTests {
 
-	private static final Logger logger = LoggerFactory.getLogger(GameControllerTests.class);
-	
 	@Autowired
 	private MockMvc mvc;
 	
 	@MockBean
 	private GameService gameService;
-	
-	@Before
-	public void before( ) {
-		Gomoku gomoku = new Gomoku();
-		Long id = gomoku.getId();
-	}
 
 	@Test
 	public void testCreate() throws Exception{
 		
 		Gomoku gomoku = new Gomoku();
 		gomoku.setId((long) 1);
-		
-		logger.info("kräähkyli " + gomoku.getId().toString() + " " + gomoku.getStatus());
 		
 		when(gameService.create()).thenReturn(gomoku.getId());
 		

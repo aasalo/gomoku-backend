@@ -3,10 +3,6 @@ package com.gomoku.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 public class BoardChecker {
 	
 	private static final int BOARD_SIDE_LENGTH = 15;
@@ -131,8 +127,6 @@ public class BoardChecker {
 		
 		final String WIN_CONDITION_WHITE = "11111";
 		final String WIN_CONDITION_BLACK = "22222";
-		
-		System.out.println("Lookup string: " + lookup);
 		
 		if (lookup.contains(WIN_CONDITION_WHITE) || lookup.contains(WIN_CONDITION_BLACK)) {
 			return true;
