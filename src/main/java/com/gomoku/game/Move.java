@@ -6,6 +6,10 @@ public class Move {
 	int column;
 	int row;
 	
+	public Move() {
+		
+	}
+	
 	public Move(Player player, int column, int row) {
 		this.column = column;
 		this.row = row;
